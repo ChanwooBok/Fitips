@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "community where we can share our fitness tips",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "repository": {
     "type": "git",

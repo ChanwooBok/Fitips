@@ -1,0 +1,12 @@
+extends base 
+include mixins/video 
+block content 
+
+    form(method="GET")
+        input(type="text" placeholder="search the title" name="keyword")
+        input(type="submit", value="search Videos")
+    div 
+        each potato in videos 
+            +apple(potato)
+        else 
+            h1 sorry not found
