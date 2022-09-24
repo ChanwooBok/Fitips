@@ -1,13 +1,15 @@
 extends base 
 
 block content 
+    if errorMessage 
+        span=errorMessage
     h1 log in 
     form(method="POST")
         input(type="text" placeholder="ID" name="username")
         input(type="password" placeholder="password" name="password")
-        button(type="submit",name="asdf")
+        input(type="submit", value="Login")
+    hr 
+    a(href="/join") not a member yet? Join
     li 
-        a(href="join") not a member yet? Join
-    li 
-        a(href="passwordMissing") forgot password? click here!
+    a(href="passwordMissing") forgot password? click here!
     

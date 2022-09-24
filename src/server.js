@@ -1,7 +1,8 @@
 // create server
 import express from "express";
+import session from "express-session";
 import morgan from "morgan";
-import globalRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 
@@ -15,7 +16,24 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
-app.use("/", globalRouter);
+
+// session middleware 추가 ! -> router전에 선언 해야 한다.
+app.use(
+  session({
+    secret: "hello",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use((req, res, next) => {
+  req.sessionStore.all((error, sessions) => {
+    console.log(sessions);
+    next();
+  });
+});
+
+app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 
