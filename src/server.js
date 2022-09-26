@@ -2,6 +2,7 @@
 import express from "express";
 import session from "express-session";
 import morgan from "morgan";
+import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -25,14 +26,23 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+/*
 app.use((req, res, next) => {
+  res.locals.sexy = "me";
+  console.log(res.locals);
   req.sessionStore.all((error, sessions) => {
-    console.log(sessions);
     next();
   });
 });
-
+*/
+/* adding new property in session object
+app.get("/add-one", (req, res, next) => {
+  req.session.mango += 1;
+  console.log("req.session : " + req.session);
+  res.end();
+});
+*/
+app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);

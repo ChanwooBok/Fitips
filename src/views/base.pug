@@ -13,11 +13,16 @@ html(lang="ko")
                     li
                         a(href="/videos/upload") Upload Video
                     li
-                        a(href="/login") Sign In
-                    li
                         a(href="/search") Search
-                    li
-                        a(href="/join") Join
+                    if !loggedIn
+                        li
+                            a(href="/join") Join
+                        li
+                            a(href="/login") Login
+                    else
+                        li 
+                            h1 test
+                    
         main
             block content
     include partials/footer
