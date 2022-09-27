@@ -44,7 +44,7 @@ export const postJoin = async (req, res) => {
 
 export const getEdit = (req, res) => {
   const user = res.locals.loggedInUser;
-  console.log(res.locals.loggedInUser.socialOnly);
+  console.log(res.locals.loggedInUser);
   return res.render("edit-profile", {
     pageTitle: `Edit ${user.name}'s Profile`,
   });
@@ -53,24 +53,29 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id, name: sessionName },
+      user: { avatarUrl, _id, name: sessionName },
     },
     body: { name, email, username, location },
+    file,
   } = req;
+
   const findUsername = await User.findOne({ username });
   const findEmail = await User.findOne({ email });
   if (
     (findUsername != null && findUsername._id != _id) ||
-    (findEmail != null && findEmail._id)
+    (findEmail != null && findEmail._id != _id)
   ) {
     return res.render("edit-profile", {
       pageTitle: `Edit ${sessionName}'s Profile`,
       errorMessage: "username or email already exists",
     });
   }
+  console.log("file : ");
+  console.log(file.path);
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,
@@ -167,6 +172,7 @@ export const finishGithubLogin = async (req, res) => {
     let user = await User.findOne({ email: emailObj.email });
     if (!user) {
       user = await User.create({
+        avatarUrl: userData.avatar_url,
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
@@ -187,7 +193,19 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
-export const see = (req, res) => res.send("See User");
+export const see = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(400).render("404", { pageTitle: "User not found" });
+  }
+  return res.render("users/profile", {
+    pageTitle: user.name,
+    user,
+  });
+};
 
 export const getChangePassword = (req, res) => {
   const {

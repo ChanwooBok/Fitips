@@ -45,6 +45,7 @@ app.get("/add-one", (req, res, next) => {
   res.end();
 });
 */
+app.use("/uploads", express.static("uploads"));
 app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);

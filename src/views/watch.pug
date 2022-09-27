@@ -1,9 +1,17 @@
 extends base 
 
 block content 
+    h1=video.owner.name
+    video(src="/"+video.fileUrl , controls)
     h1 watch #{video.title} 
     div 
         p=video.description
         small=video.craetedAt
-    a(href=`/videos/${video.id}/edit`) Edit Video &rarr;
-    a(href=`/videos/${video.id}/delete`) delete Video &rarr;
+    div 
+        small Uploaded by #{video.owner.name}
+    if video.owner == loggedInUser._id
+        a(href=`/videos/${video.id}/edit`) Edit Video &rarr;
+        a(href=`/videos/${video.id}/delete`) delete Video &rarr;
+    else
+        small no authority
+        
