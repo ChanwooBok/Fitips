@@ -14,14 +14,16 @@ html(lang="ko")
                         a(href="/videos/upload") Upload Video
                     li
                         a(href="/search") Search
-                    if !loggedIn
+                    if loggedIn
+                        li 
+                            a(href="/users/logout") Log out
+                        li 
+                            a(href="/users/edit") #{loggedInUser.name}의 프로필
+                    else    
                         li
                             a(href="/join") Join
                         li
                             a(href="/login") Login
-                    else
-                        li 
-                            h1 test
                     
         main
             block content
