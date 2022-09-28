@@ -1,3 +1,4 @@
+import User from "../models/User";
 import Video from "../models/Video";
 
 // js의 단점은 기다리는 기능이 없어서 아무리 위에서 아래로 읽어도 database에서 불러오는 시간이 있어서 순서가 꼬인다.
@@ -27,7 +28,7 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res.render("404", { pagetitle: "video not found" });
   }
@@ -95,15 +96,18 @@ export const postUpload = async (req, res) => {
   const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   // 1. 직접 Video.create()하여 한번에 생성 후 db저장까지 하는 방법.
-  console.log(_id);
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       title,
       description,
       owner: _id,
       fileUrl,
       hashtags: Video.formatHashtags(hashtags),
     });
+    const user = await User.findById(_id);
+    console.log(newVideo._id);
+    user.videos.push(newVideo._id);
+    user.save(); // save() 발생 시, 실행되는 middleware bug fix
     return res.redirect("/");
   } catch (error) {
     return res.status(400).render("upload", {

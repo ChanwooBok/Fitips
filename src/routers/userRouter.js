@@ -2,7 +2,6 @@ import express from "express";
 import {
   getEdit,
   postEdit,
-  remove,
   logout,
   see,
   startGithubLogin,
@@ -15,6 +14,7 @@ import {
   protectorMiddleware,
   publicOnlyMiddelware,
 } from "../middlewares";
+
 const userRouter = express.Router();
 
 userRouter.get("/logout", protectorMiddleware, logout);

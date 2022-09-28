@@ -1,4 +1,10 @@
 extends ../base 
+include ../mixins/video 
 
 block content 
     h1 hello
+
+    each potato in user.videos
+        +apple(potato)
+    else 
+        li sorry not found

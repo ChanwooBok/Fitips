@@ -45,7 +45,9 @@ app.get("/add-one", (req, res, next) => {
   res.end();
 });
 */
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads")); // static : express한테 폴더안에있는 파일들을 볼 수 있게끔 요청하는것
+// 폴더들은 기본적으로 공개되어있지 않음. 서버가 공개할 폴더를 정하는 것.
+app.use("/static", express.static("assets"));
 app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);

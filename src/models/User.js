@@ -9,10 +9,14 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   location: String,
   socialOnly: { type: Boolean, default: false },
+  videos: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {
-  this.password = await bcrypt.hash(this.password, 5);
+  if (this.isModified("password")) {
+    // postUpload시, user.save() 버그 해결
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
 const User = mongoose.model("User", userSchema); // create model
