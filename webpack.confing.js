@@ -1,23 +1,34 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
   entry: "./src/client/js/main.js",
   mode: "development",
+  watch: true,
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/styles.css",
+    }),
+  ],
   output: {
-    filename: "main.js",
-    //path: "./assets/js", -> error : The provided value "./assets/js" is not an absolute path!
-    path: path.resolve(__dirname, "assets", "js"), // /Users/chanwoobok/Fitips/assets/js
+    filename: "js/main.js",
+    path: path.resolve(__dirname, "assets"),
+    clean: true,
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         use: {
-          loader: "babel-loader", // 프론트도 babel을 이용해 js코드를 컴퓨터가 알아들을수있게 바꿔줌.in webpack
+          loader: "babel-loader",
           options: {
             presets: [["@babel/preset-env", { targets: "defaults" }]],
           },
         },
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
     ],
   },
