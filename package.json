@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "community where we can share our fitness tips",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.confing.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "repository": {
     "type": "git",
