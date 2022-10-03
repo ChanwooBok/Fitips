@@ -16,7 +16,7 @@
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ \"./src/client/scss/styles.scss\");\n\nalert(\"hi\"); // 여기에 섹시코드를 쓰면 웹팩이 컴파일해주고, assets에 저장해준다. 그러면 base.pug템플릿에서 그걸 읽고 적용한다.\n\n//# sourceURL=webpack://fitips/./src/client/js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _scss_styles_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/styles.scss */ \"./src/client/scss/styles.scss\");\n\nconsole.log(\"main\"); // 여기에 섹시코드를 쓰면 웹팩이 컴파일해주고, assets에 저장해준다. 그러면 base.pug템플릿에서 그걸 읽고 적용한다.\n\n//# sourceURL=webpack://fitips/./src/client/js/main.js?");
 
 /***/ }),
 
