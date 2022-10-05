@@ -146,11 +146,12 @@ export const registerView = async (req, res) => {
   const {
     params: { id },
   } = req;
+
   const video = await Video.findById(id);
   if (!video) {
-    return res.status(404);
+    return res.sendStatus(404);
   }
   video.meta.views = video.meta.views + 1;
   await video.save();
-  return res.status(200);
+  return res.sendStatus(200); // .status(200) : render( ) 하기 전에 상태 코드를 정할 수 있음 VS sendStatus(200): 상태를 보내고 연결을 끊음
 };

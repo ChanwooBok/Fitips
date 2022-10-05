@@ -66,7 +66,7 @@ const handleTimeUpdate = () => {
   timeline.value = Math.floor(video.currentTime);
 };
 
-video.addEventListener("loadeddata", handleLoadedMetaData);
+video.addEventListener("loadedmetadata", handleLoadedMetaData);
 //The loadedmetadata event is fired when the metadata has been loaded.
 video.addEventListener("timeupdate", handleTimeUpdate);
 //The timeupdate event is fired when the time indicated by the currentTime attribute has been updated.
@@ -118,3 +118,12 @@ const handleMouseLeave = () => {
 
 video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
+
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    //we should use POST when we are mutating the database and GET when we are just getting data.
+  });
+};
+
+video.addEventListener("ended", handleEnded);
