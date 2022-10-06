@@ -15,7 +15,7 @@
   \***********************************/
 /***/ (() => {
 
-eval("const startBtn = document.getElementById(\"startBtn\");\n\nconst handleStart = async () => {\n  const stream = await navigator.mediaDevices.getUserMedia({\n    audio: true,\n    video: true\n  });\n  console.log(stream);\n};\n\nstartBtn.addEventListener(\"click\", handleStart);\n\n//# sourceURL=webpack://fitips/./src/client/js/recorder.js?");
+eval("const startBtn = document.getElementById(\"startBtn\");\nconst video = document.getElementById(\"preview\");\nlet stream;\n\nconst handleStop = () => {\n  startBtn.innerText = \"Start recording\";\n  startBtn.removeEventListener(\"click\", handleStop);\n  startBtn.addEventListener(\"click\", handleStart);\n};\n\nconst handleStart = () => {\n  startBtn.innerText = \"Stop recording\";\n  startBtn.removeEventListener(\"click\", handleStart);\n  startBtn.addEventListener(\"click\", handleStop);\n  const recorder = new MediaRecorder(stream);\n  console.log(recorder);\n};\n\nconst init = async () => {\n  stream = await navigator.mediaDevices.getUserMedia({\n    audio: false,\n    video: true\n  });\n  video.srcObject = stream;\n  video.play();\n};\n\ninit();\nstartBtn.addEventListener(\"click\", handleStart);\n\n//# sourceURL=webpack://fitips/./src/client/js/recorder.js?");
 
 /***/ })
 
