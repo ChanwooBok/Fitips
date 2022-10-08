@@ -5,10 +5,17 @@ let stream;
 let recorder;
 let videoFile;
 
-const handleDownload = () => {
+const handleDownload = async () => {
+  const ffmpeg = createFFmpeg({ log: true });
+  await ffmpeg.load();
+
+  ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
+
+  await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+
   const a = document.createElement("a");
   a.href = videoFile;
-  a.download = "my recording.webm"; // a has download attribute. It causes the browser to treat the linked URL as a download
+  a.download = "MyRecording.webm"; // a has download attribute. It causes the browser to treat the linked URL as a download
   document.body.appendChild(a);
   a.click(); // 유저가 링크를 클릭한것과 같은 효과를 준다.
 };
