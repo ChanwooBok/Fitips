@@ -51,6 +51,11 @@ app.use("/uploads", express.static("uploads")); // static : express한테 폴더
 app.use("/static", express.static("assets"));
 app.use(localsMiddleware);
 app.use("/", rootRouter);
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
+});
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 app.use("/api", apiRouter);

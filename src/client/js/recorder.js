@@ -18,9 +18,15 @@ const handleDownload = async () => {
 
   await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
 
+  const mp4File = ffmpeg.FS("readFile", "output.mp4");
+
+  const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
+
+  const mp4Url = URL.createObjectURL(mp4Blob);
+
   const a = document.createElement("a");
-  a.href = videoFile;
-  a.download = "MyRecording.webm"; // a has download attribute. It causes the browser to treat the linked URL as a download
+  a.href = mp4Url;
+  a.download = "MyRecording.mp4"; // a has download attribute. It causes the browser to treat the linked URL as a download
   document.body.appendChild(a);
   a.click(); // 유저가 링크를 클릭한것과 같은 효과를 준다.
 };
