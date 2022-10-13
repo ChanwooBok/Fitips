@@ -95,7 +95,8 @@ export const postUpload = async (req, res) => {
       user: { _id },
     },
   } = req;
-  const { path: fileUrl } = req.file;
+  const { video, thumb } = req.files;
+  console.log(video, thumb);
   const { title, description, hashtags } = req.body;
   // 1. 직접 Video.create()하여 한번에 생성 후 db저장까지 하는 방법.
   try {
@@ -103,7 +104,8 @@ export const postUpload = async (req, res) => {
       title,
       description,
       owner: _id,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       hashtags: Video.formatHashtags(hashtags),
     });
     const user = await User.findById(_id);
