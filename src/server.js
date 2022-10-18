@@ -19,6 +19,8 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // express에게 브라우저에서 서버로 json을 보내고 있다고 알려줌.->문자열을 받아서 json으로 바꿔줍니다.
+// headers: { "Content-type": "application/json" }인 request만 express.json()을 실행한다.
 
 // session middleware 추가 ! -> router전에 선언 해야 한다.
 app.use(
