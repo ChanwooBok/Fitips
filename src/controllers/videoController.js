@@ -32,7 +32,6 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id).populate("owner").populate("comments");
-  console.log(video);
   if (!video) {
     return res.render("404", { pagetitle: "video not found" });
   }
@@ -98,7 +97,6 @@ export const postUpload = async (req, res) => {
     },
   } = req;
   const { video, thumb } = req.files;
-  console.log(video, thumb);
   const { title, description, hashtags } = req.body;
   // 1. 직접 Video.create()하여 한번에 생성 후 db저장까지 하는 방법.
   try {
