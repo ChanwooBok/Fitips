@@ -19,7 +19,6 @@ export const postJoin = async (req, res) => {
   const exists = await User.exists({ $or: [{ username }, { email }] });
 
   if (exists) {
-    console.log("exists");
     return res.status(400).render("join", {
       pageTitle,
       errorMessage: "this username or email is already taken",
@@ -69,8 +68,6 @@ export const postEdit = async (req, res) => {
       errorMessage: "username or email already exists",
     });
   }
-  console.log("file : ");
-  console.log(file.path);
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
@@ -216,7 +213,6 @@ export const getChangePassword = (req, res) => {
   const {
     session: { user },
   } = req;
-  console.log(user);
   return res.render("users/change-password", {
     pageTitle: "Change password",
   });
