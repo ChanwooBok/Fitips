@@ -2,17 +2,21 @@ const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const btn = form.querySelector("button");
 
-const addCommnet = (text) => {
+const addCommnet = (text, id) => {
   //  constructing HTML elements with JS -> realtime comments
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
+  newComment.dataset.id = id;
   newComment.className = "video__comment";
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
+  const span2 = document.createElement("span");
+  span2.innerText = "❌";
   newComment.appendChild(icon);
   newComment.appendChild(span);
+  newComment.appendChild(span2);
   videoComments.prepend(newComment); // prepend는 맨 위에 추가함. / appendChild는 맨 밑에 추가함.
 };
 
@@ -24,7 +28,7 @@ const handleSubmit = async (event) => {
     return;
   }
   const videoId = videoContainer.dataset.id;
-  const { status } = await fetch(`/api/videos/${videoId}/comment`, {
+  const response = await fetch(`/api/videos/${videoId}/comment`, {
     // fetch는 promise<Response> 기다리면 response라는 것을 준다.
     method: "POST",
     headers: {
@@ -32,9 +36,10 @@ const handleSubmit = async (event) => {
     },
     body: JSON.stringify({ text }), // json object를 string으로 바꿔서 보내지만 백엔드에서는 express.json()을 써주었기 때문에 다시 json으로 바꿔서 받아들일것.
   });
-  textarea.value = "";
   if (status == 201) {
-    addCommnet(text);
+    textarea.value = "";
+    const { newCommentId } = await response.json();
+    addComment(text, newCommentId);
   }
 };
 
