@@ -36,7 +36,7 @@ const handleSubmit = async (event) => {
     },
     body: JSON.stringify({ text }), // json object를 string으로 바꿔서 보내지만 백엔드에서는 express.json()을 써주었기 때문에 다시 json으로 바꿔서 받아들일것.
   });
-  if (status == 201) {
+  if (response.status == 201) {
     textarea.value = "";
     const { newCommentId } = await response.json();
     addComment(text, newCommentId);
