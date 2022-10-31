@@ -108,7 +108,7 @@ const handleMouseMove = () => {
     clearTimeout(controlsMovementTimeout);
     controlsMovementTimeout = null;
   } // 이걸 초기화 안해주면 마우스움직이고 있는데도 중간에 컨트롤 사라진다.
-  //초기회해줘서 마우스가 움직이는동안에는 계속 타임아웃을 초기화 해준다..
+  //초기화해줘서 마우스가 움직이는동안에는 계속 타임아웃을 초기화 해준다.
   videoControls.classList.add("visible");
   controlsMovementTimeout = setTimeout(hideControls, 3000);
 };
