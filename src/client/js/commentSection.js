@@ -1,12 +1,11 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const btn = form.querySelector("button");
+const deleteBtn = document.querySelectorAll("#deleteCommentBtn");
 
-const addCommnet = (text, id) => {
+const addComment = (text, commentId) => {
   //  constructing HTML elements with JS -> realtime comments
   const videoComments = document.querySelector(".video__comments ul");
   const newComment = document.createElement("li");
-  newComment.dataset.id = id;
   newComment.className = "video__comment";
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
@@ -14,10 +13,30 @@ const addCommnet = (text, id) => {
   span.innerText = ` ${text}`;
   const span2 = document.createElement("span");
   span2.innerText = "❌";
+  span2.dataset.id = commentId; // enabling user to delete comments that has been just created
+  span2.dataset.videoId = videoContainer.dataset.id;
+  span2.id = "newCommentBtn";
+  span2.className = "video__comment-delete";
   newComment.appendChild(icon);
   newComment.appendChild(span);
   newComment.appendChild(span2);
   videoComments.prepend(newComment); // prepend는 맨 위에 추가함. / appendChild는 맨 밑에 추가함.
+  const newDeleteCommentBtn = document.querySelector("#newCommentBtn");
+  newDeleteCommentBtn.addEventListener("click", handleClick);
+};
+
+const handleClick = async (event) => {
+  const { id, videoId } = event.target.dataset;
+  const response = await fetch(`/api/videos/${videoId}/comments/${id}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, videoId }),
+  });
+  if (response.status === 200) {
+    event.target.parentNode.remove();
+  }
 };
 
 const handleSubmit = async (event) => {
@@ -29,6 +48,7 @@ const handleSubmit = async (event) => {
   }
   const videoId = videoContainer.dataset.id;
   const response = await fetch(`/api/videos/${videoId}/comment`, {
+    // backend -> frontend : sending response
     // fetch는 promise<Response> 기다리면 response라는 것을 준다.
     method: "POST",
     headers: {
@@ -38,11 +58,14 @@ const handleSubmit = async (event) => {
   });
   if (response.status == 201) {
     textarea.value = "";
-    const { newCommentId } = await response.json();
-    addComment(text, newCommentId);
+    const { newCommentId } = await response.json(); // getting json object from response
+    addComment(text, newCommentId); // sending newCommentId to frontend
   }
 };
 
 if (form) {
   form.addEventListener("submit", handleSubmit);
+}
+if (deleteBtn) {
+  deleteBtn.forEach((btn) => btn.addEventListener("click", handleClick));
 }

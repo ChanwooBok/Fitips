@@ -35,7 +35,6 @@ export const watch = async (req, res) => {
   if (!video) {
     return res.render("404", { pagetitle: "video not found" });
   }
-
   return res.render("watch", { pageTitle: `Watching: ${video.title}`, video });
 };
 
@@ -176,5 +175,20 @@ export const createComment = async (req, res) => {
   });
   video.comments.push(comment._id);
   video.save();
-  return res.status(201).json({ newCommentId: comment._id });
+  return res.status(201).json({ newCommentId: comment._id }); // sending new comment's id to frontend
+};
+
+export const deleteComment = async (req, res) => {
+  const { id, videoId } = req.body;
+  const { _id } = req.session.user; // loggedIn user id
+  const { owner } = await Comment.findById(id); // owner of comment
+  const video = await Video.findById(videoId);
+  if (String(owner) !== _id) {
+    return res.sendStatus(403);
+  } else {
+    await Comment.findByIdAndDelete(id); // deleting comment using commentId
+    video.comments.splice(video.comments.indexOf(videoId), 1); // splice(3,1) :배열3번째부터 1개를 제거한다.
+    video.save();
+    return res.sendStatus(200);
+  }
 };
