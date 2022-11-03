@@ -27,12 +27,10 @@ const addComment = (text, commentId) => {
 
 const handleClick = async (event) => {
   const { id, videoId } = event.target.dataset;
+  // videoId까지 찾아주는 이유 : video마다 코멘트가 달려있기 때문에..
   const response = await fetch(`/api/videos/${videoId}/comments/${id}/delete`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id, videoId }),
+    body: { id, videoId },
   });
   if (response.status === 200) {
     event.target.parentNode.remove();
