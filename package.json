@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "community where we can share our fitness tips",
   "scripts": {
+    "start":"node build/init.js",
+    "build:server":"babel src -d build",
     "dev:server": "nodemon",
     "dev:assets": "webpack"
   },
@@ -32,7 +34,8 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.0",
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
     "@babel/node": "^7.18.10",
     "@babel/preset-env": "^7.19.0",
     "css-loader": "^6.7.1",
