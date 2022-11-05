@@ -180,9 +180,6 @@ export const createComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   const { id, videoId } = req.body;
-  console.log(id);
-  console.log(videoId);
-
   const { _id } = req.session.user; // loggedIn user id
   const { owner } = await Comment.findById(id); // owner of comment
   const video = await Video.findById(videoId);
