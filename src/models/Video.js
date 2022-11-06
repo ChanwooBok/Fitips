@@ -28,6 +28,7 @@ const videoSchema = new mongoose.Schema({
       .map((word) => (word.startsWith("#") ? word : `#${word}`));
   });
 */
+
 /* 이 방법 단점 : Video.findByIdAndUpdate, Create등등.. mongoose모델의 다양한 function을 사용하는데,
 이들은 save훅업이 발생하지 않음. -> 즉, pre()형태로 이용 할 수 가 없음.  */
 // 해결책 1.Video.js에 function을 별도로 만들어서 export -> 괜찮으나 더 좋은 방법이 있을듯
