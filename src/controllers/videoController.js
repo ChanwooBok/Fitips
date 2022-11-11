@@ -12,19 +12,18 @@ Video.find({}, (error,videos)=>{
   return res.render("home", { pageTitle: "Home", videos });
 })
 */
-
 // 반면,await는 database에게 결과값을 받을때까지 js가 기다리게 해줄 수 있다 -> 코드의 가독성이 높아진다.
 export const home = async (req, res) => {
   try {
     const videos = await Video.find({})
       .sort({ createdAt: "desc" })
       .populate("owner");
-    //하지만 callback function과 달리 promise방식은 error 가 어디서 오는지 명확하지가 않다.그래서 try catch 방법을 쓴다
     return res.render("home", { pageTitle: "Home", videos });
     //1. return의 역할 : 본질적인 return의 역할보다는 function을 마무리짓는 역할로 사용되고 있음.
     //- 이러한 경우 return이 없어도 정상적으로 동작하지만 실수를 방지하기 위해 return을 사용
     //2. render한 것은 다시 render할 수 없음
   } catch (error) {
+    //하지만 callback function과 달리 promise방식은 error 가 어디서 오는지 명확하지가 않다.그래서 try catch 방법을 쓴다
     return res.render("server-error", { error });
   }
 };
