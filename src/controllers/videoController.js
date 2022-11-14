@@ -96,7 +96,7 @@ export const postUpload = async (req, res) => {
   } = req;
   const { video, thumb } = req.files;
   const { title, description, hashtags } = req.body;
-  // 1. 직접 Video.create()하여 한번에 생성 후 db저장까지 하는 방법.
+  // 1. 직접 Video.create()하여 한번에 생성 후 db저장까지 하는 방법
   try {
     const newVideo = await Video.create({
       title,
