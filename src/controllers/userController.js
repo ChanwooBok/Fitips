@@ -56,7 +56,6 @@ export const postEdit = async (req, res) => {
     body: { name, email, username, location },
     file,
   } = req;
-
   const findUsername = await User.findOne({ username });
   const findEmail = await User.findOne({ email });
   if (
@@ -79,7 +78,7 @@ export const postEdit = async (req, res) => {
     },
     { new: true }
   );
-  req.session.user = updatedUser;
+  req.session.user = updatedUser; // session의 user도 업데이트
   return res.redirect("/users/edit");
 };
 
@@ -99,7 +98,7 @@ export const postLogin = async (req, res) => {
       errorMessage: "An account with this username does not exists",
     });
   }
-  const ok = await bcrypt.compare(password, user.password);
+  const ok = await bcrypt.compare(password, user.password); // 비밀번호 체크
   if (!ok) {
     return res.status(400).render("login", {
       pageTitle,
