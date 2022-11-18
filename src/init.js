@@ -1,5 +1,5 @@
 // initialize server
-import "dotenv/config";
+import "dotenv/config"; // process.env 를 읽을 수 있게 해주는 기능
 import "./db";
 import "./models/Video";
 import "./models/User";
