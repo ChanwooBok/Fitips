@@ -173,7 +173,7 @@ export const createComment = async (req, res) => {
     video: id,
   });
   video.comments.push(comment._id);
-  video.save();
+  video.save(); // video모델을 수정하고나면 반드시 저장 따로해주어야 업데이트가 된다.
   return res.status(201).json({ newCommentId: comment._id }); // sending new comment's id to frontend
 };
 

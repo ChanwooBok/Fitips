@@ -119,7 +119,7 @@ export const startGithubLogin = (req, res) => {
     allow_signup: true,
     scope: "read:user user:email", // A space-delimited list of scopes. -doc
   };
-  const params = new URLSearchParams(config);
+  const params = new URLSearchParams(config); // params을 연결해주는 javascript기능.
   const finalUrl = `${baseUrl}?${params}`;
   return res.redirect(finalUrl);
 };
