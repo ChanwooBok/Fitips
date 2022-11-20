@@ -5,6 +5,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Fitips";
   res.locals.loggedInUser = req.session.user || {};
   next();
+  // putting stuff in local so that pug can approach those data.
 };
 
 export const protectorMiddleware = (req, res, next) => {
@@ -12,7 +13,7 @@ export const protectorMiddleware = (req, res, next) => {
     next();
   } else {
     return res.redirect("/login");
-  }
+  } // only allowing loggedInUser to move on to next page.
 };
 
 export const publicOnlyMiddelware = (req, res, next) => {
@@ -20,7 +21,7 @@ export const publicOnlyMiddelware = (req, res, next) => {
     next();
   } else {
     return res.redirect("/");
-  }
+  } // only allowing not loggedInUser to move on to next page ( public page ).
 };
 
 export const avatarUpload = multer({
