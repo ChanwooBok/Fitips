@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function () {
   if (this.isModified("password")) {
-    // postUpload시, user.save() 버그 해결
+    // postUpload시, user.save() 버그 해결 : save하여도, 패스워드가 바뀐것이 아니라면, 해시처리하지 않음.
     this.password = await bcrypt.hash(this.password, 5);
   }
 });

@@ -109,7 +109,7 @@ export const postUpload = async (req, res) => {
     const user = await User.findById(_id);
     console.log(newVideo._id);
     user.videos.push(newVideo._id);
-    user.save(); // save() 발생 시, 실행되는 middleware bug fix
+    user.save(); // save() 발생 시, 실행되는 middleware bug fix : password변경이 아닌경우, 해시 처리 하지 않게끔 수정함.
     return res.redirect("/");
   } catch (error) {
     return res.status(400).render("upload", {
