@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   socialOnly: { type: Boolean, default: false },
   videos: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
-});
+});    
 
 userSchema.pre("save", async function () {
   if (this.isModified("password")) {
