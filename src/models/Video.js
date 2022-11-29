@@ -32,7 +32,7 @@ const videoSchema = new mongoose.Schema({
 // 해결책 1.Video.js에 function을 별도로 만들어서 export-> 괜찮으나 더 좋은 방법이 있을듯
 /*export const formatHashtags  = (hashtags) => {
           hashtags s
-              .split(",")
+              .split(",")  
               .map((word) => (word.startsWith("#") ? word : `#${word}`))
         }*/
 // 2. 모델에 static함수를 추가. -> findByIdAndUpdate , Create등등의 함수를 직접 만들어서 쓰기 .
