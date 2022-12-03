@@ -35,7 +35,7 @@ const videoSchema = new mongoose.Schema({
               .split(",")  
               .map((word) => (word.startsWith("#") ? word : `#${word}`))
         }*/
-// 2. 모델에 static함수를 추가. -> findByIdAndUpdate , Create등등의 함수를 직접 만들어서 쓰기 .
+// 2. 모델에 static함수를 추가. -> findByIdAndUpdate,Create등등의 함수를 직접 만들어서 쓰기 .
 
 videoSchema.static("formatHashtags", function (hashtags) {
   return hashtags
