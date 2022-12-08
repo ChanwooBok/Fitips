@@ -13,4 +13,4 @@ const handleListening = () => {
   console.log(`✅ Server listenting on http://localhost:${PORT} 🚀 `);
 };
 
-app.listen(PORT, handleListening); // server is listening to request by using express server
+app.listen(PORT, handleListening); // server is listening  to request by using express server
