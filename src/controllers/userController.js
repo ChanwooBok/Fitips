@@ -118,6 +118,7 @@ export const startGithubLogin = (req, res) => {
     client_id: "06d21b73037a5f32127c",
     allow_signup: true,
     scope: "read:user user:email", // A space-delimited list of scopes. -doc
+    // we can set up the scope that we want to get from github
   };
   const params = new URLSearchParams(config); // params을 연결해주는 javascript기능.
   const finalUrl = `${baseUrl}?${params}`;
