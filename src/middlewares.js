@@ -5,7 +5,7 @@ export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Fitips";
   res.locals.loggedInUser = req.session.user || {};
   next();
-  // putting stuff in local so that pug can approach those data.
+  // putting stuff in local so that pug template can approach those data.
 };
 
 export const protectorMiddleware = (req, res, next) => {

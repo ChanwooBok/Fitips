@@ -42,7 +42,7 @@ export const postJoin = async (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  const user = res.locals.loggedInUser;
+  const user = res.locals.loggedInUser; // getting the user information from locals
   return res.render("edit-profile", {
     pageTitle: `Edit ${user.name}'s Profile`,
   });
@@ -78,7 +78,7 @@ export const postEdit = async (req, res) => {
     },
     { new: true }
   );
-  req.session.user = updatedUser; // session의 user도 업데이트
+  req.session.user = updatedUser; // updating user in session.
   return res.redirect("/users/edit");
 };
 
